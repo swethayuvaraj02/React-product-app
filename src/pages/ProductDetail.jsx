@@ -4,7 +4,6 @@ import Button from "@mui/material/Button";
 
 export default function ProductDetail() {
   const { id } = useParams();
-
   const [product, setProduct] = useState(null);
   const [activeTab, setActiveTab] = useState("description");
   const [showCartPopup, setShowCartPopup] = useState(false);
@@ -17,19 +16,17 @@ export default function ProductDetail() {
       .catch((err) => console.log(err));
   }, [id]);
 
-  if (!product) {
-    return <h2 style={{ padding: "20px" }}>Loading…</h2>;
-  }
+  if (!product) return <h2 style={{ padding: "20px" }}>Loading…</h2>;
 
   return (
     <>
-      {/* MAIN LAYOUT */}
       <div
         style={{
           display: "flex",
           padding: "40px",
           gap: "50px",
           alignItems: "flex-start",
+          fontFamily: "'Poppins', Arial, sans-serif",
         }}
       >
         {/* LEFT: IMAGES */}
@@ -39,7 +36,6 @@ export default function ProductDetail() {
             alt={product.title}
             style={{ width: "100%", borderRadius: "12px" }}
           />
-
           <div style={{ display: "flex", gap: "10px", marginTop: "15px" }}>
             {product.images?.slice(0, 3).map((img, idx) => (
               <img
@@ -61,27 +57,19 @@ export default function ProductDetail() {
         {/* RIGHT: DETAILS */}
         <div style={{ width: "55%" }}>
           <h2>{product.title}</h2>
-
           <h3 style={{ margin: "8px 0" }}>${product.price}</h3>
-
           <p style={{ color: "red", fontWeight: "bold" }}>
             {product.discountPercentage}% OFF
           </p>
-
           <p>
             ⭐ {product.rating}{" "}
-            <span style={{ color: "gray" }}>
-              ({product.stock} reviews)
-            </span>
+            <span style={{ color: "gray" }}>({product.stock} reviews)</span>
           </p>
-
           <p style={{ color: "green", fontWeight: "bold" }}>In Stock</p>
-
           <p style={{ color: "#555" }}>
             Ships in 3–5 business days <br />
             1-week warranty
           </p>
-
           <p style={{ color: "red" }}>
             Minimum order: {product.minimumOrder ?? 1} unit
           </p>
@@ -94,7 +82,6 @@ export default function ProductDetail() {
             >
               Add to Cart
             </Button>
-
             <Button
               variant="contained"
               color="secondary"
@@ -117,6 +104,7 @@ export default function ProductDetail() {
                   fontWeight: activeTab === tab ? "bold" : "normal",
                   borderBottom:
                     activeTab === tab ? "2px solid black" : "none",
+                  fontFamily: "'Poppins', Arial, sans-serif",
                 }}
               >
                 {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -127,11 +115,9 @@ export default function ProductDetail() {
           {/* TAB CONTENT */}
           <div style={{ marginTop: "20px", color: "#444" }}>
             {activeTab === "description" && <p>{product.description}</p>}
-
             {activeTab === "reviews" && (
               <p>⭐ 4.2 average rating from 99 verified buyers</p>
             )}
-
             {activeTab === "shipping" && (
               <p>Free delivery within 3–5 business days.</p>
             )}
@@ -139,7 +125,7 @@ export default function ProductDetail() {
         </div>
       </div>
 
-      {/* ADD TO CART POPUP */}
+      {/* POPUPS */}
       {showCartPopup && (
         <Popup
           title="Added to Cart"
@@ -147,8 +133,6 @@ export default function ProductDetail() {
           onClose={() => setShowCartPopup(false)}
         />
       )}
-
-      {/* BUY NOW POPUP */}
       {showBuyPopup && (
         <Popup
           title="Proceed to Checkout?"
@@ -161,7 +145,6 @@ export default function ProductDetail() {
   );
 }
 
-/* REUSABLE POPUP */
 function Popup({ title, text, onClose, primaryText = "OK" }) {
   return (
     <div
@@ -181,11 +164,11 @@ function Popup({ title, text, onClose, primaryText = "OK" }) {
           borderRadius: "12px",
           width: "320px",
           textAlign: "center",
+          fontFamily: "'Poppins', Arial, sans-serif",
         }}
       >
         <h3>{title}</h3>
         <p style={{ color: "#555" }}>{text}</p>
-
         <div style={{ marginTop: "20px" }}>
           <Button variant="contained" onClick={onClose}>
             {primaryText}

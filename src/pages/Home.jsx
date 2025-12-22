@@ -11,7 +11,6 @@ function Home() {
   const [page, setPage] = useState(1);
 
   const navigate = useNavigate();
-
   const itemsPerPage = 8;
 
   useEffect(() => {
@@ -20,17 +19,14 @@ function Home() {
       .then((data) => setProducts(data.products));
   }, []);
 
-  // 🔍 Filter products by search
   const filteredProducts = products.filter((prod) =>
     prod.title.toLowerCase().includes(search.toLowerCase())
   );
 
-  // 📄 Pagination logic (after filtering)
   const start = (page - 1) * itemsPerPage;
   const end = start + itemsPerPage;
   const visibleProducts = filteredProducts.slice(start, end);
 
-  // Reset page when search changes
   useEffect(() => {
     setPage(1);
   }, [search]);
@@ -41,6 +37,7 @@ function Home() {
         padding: "40px",
         maxWidth: "1200px",
         margin: "0 auto",
+        fontFamily: "'Poppins', Arial, sans-serif",
       }}
     >
       {/* HEADER */}
@@ -82,6 +79,7 @@ function Home() {
               boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
               display: "flex",
               flexDirection: "column",
+              fontFamily: "'Poppins', Arial, sans-serif",
             }}
           >
             <img
@@ -111,14 +109,12 @@ function Home() {
         ))}
       </div>
 
-      {/* EMPTY STATE */}
       {filteredProducts.length === 0 && (
         <p style={{ marginTop: "40px", textAlign: "center", color: "#777" }}>
           No products found.
         </p>
       )}
 
-      {/* PAGINATION */}
       {filteredProducts.length > itemsPerPage && (
         <Stack alignItems="center" marginTop={5}>
           <Pagination
